@@ -761,6 +761,8 @@ int main() {
 	
 }
 
+// Dated : June 23
+
 //Move all negative elements to end in order with extra space allowed
 
 #include <iostream>
@@ -797,4 +799,383 @@ int main() {
 	}
 	
 	return 0;
+}
+
+//Replace every array element by multiplication of previous and next
+
+#include<iostream>
+using namespace std;
+ 
+void modify(int arr[], int n)
+{
+    int prev = arr[0];
+    arr[0] = arr[0] * arr[1];
+ 
+ 	for (int i=1; i<n-1; i++)
+    {
+    
+        int curr = arr[i];
+ 	    arr[i] = prev * arr[i+1];
+ 	    prev = curr;
+    }
+ 	arr[n-1] = prev * arr[n-1];
+}
+ 
+int main()
+{
+    int n ;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++){
+    	cin>>a[i];
+    }
+    modify(a, n);
+    for (int i=0; i<n; i++)
+      cout << a[i] << " ";
+    return 0;
+}
+
+//Segregate even odd
+// numbers in an array  BASED on Lomuto’s Partition Scheme
+#include <bits/stdc++.h>
+using namespace std;
+ 
+// Function to segregate even odd numbers
+void arrayEvenAndOdd(int arr[], int n)
+{
+ 
+    int i = -1, j = 0;
+    int t;
+    while (j != n) {
+        if (arr[j] % 2 == 0) {
+            i++;
+ 
+            // Swapping even and odd numbers
+            swap(arr[i], arr[j]);
+        }
+        j++;
+    }
+ 
+    // Printing segregated array
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+}
+ 
+// Driver code
+int main()
+{
+    int arr[] = { 1, 3, 2, 4, 7, 6, 9, 10 };
+    int n = sizeof(arr) / sizeof(int);
+    arrayEvenAndOdd(arr, n);
+    return 0;
+}
+
+
+// Dated : June 24
+
+// K’th smallest element
+#include<iostream>
+using namespace std;
+void merge(int arr[], int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
+
+    /* create temp arrays */
+    int L[n1], R[n2];
+
+    /* Copy data to temp arrays L[] and R[] */
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1+ j];
+
+    /* Merge the temp arrays back into arr[l..r]*/
+    i = 0; // Initial index of first subarray
+    j = 0; // Initial index of second subarray
+    k = l; // Initial index of merged subarray
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    /* Copy the remaining elements of L[], if there
+       are any */
+    while (i < n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    /* Copy the remaining elements of R[], if there
+       are any */
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+/* l is for left index and r is right index of the
+   sub-array of arr to be sorted */
+void mergeSort(int arr[], int l, int r)
+{
+    if (l < r)
+    {
+        // Same as (l+r)/2, but avoids overflow for
+        // large l and h
+        int m = l+(r-l)/2;
+
+        // Sort first and second halves
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+
+        merge(arr, l, m, r);
+    }
+}
+int main()
+ {
+    int t,s;
+    cin>>t;
+    for(s=0;s<t;s++){
+        int n;
+        cin>>n;
+        int a[n];
+        for(int i=0;i<n;i++){
+            cin>>a[i];
+        }
+        int k;
+        cin>>k;
+        mergeSort(a,0,n-1);
+        cout<<a[k-1]<<endl;
+
+    }
+	return 0;
+}
+
+//Program to find largest element in an array
+
+#include<iostream>
+using namespace std;
+int main()
+ {
+	int t,s;
+	cin>>t;
+	for(int s=0;s<t;s++){
+	    int n;
+	    cin>>n;
+	    int temp=-32767;
+	    int a[n];
+	    for(int i=0;i<n;i++){
+	        cin>>a[i];
+	        if(temp<a[i]){
+	            temp = a[i];
+	        }
+	    }
+	    cout<<temp<<endl;
+	}
+	return 0;
+}
+
+//Find the largest three elements in an array
+
+#include <stdio.h>
+
+void print2largest(int arr[], int arr_size)
+{
+    int i, first, second, third;
+  
+  	if (arr_size < 3)
+    {
+        printf(" Invalid Input ");
+        return;
+    }
+  
+    third = first = second = -32767;
+    for (i = 0; i < arr_size ; i ++)
+    {
+        if (arr[i] > first)
+        {
+            third = second;
+            second = first;
+            first = arr[i];
+        }
+  
+        else if (arr[i] > second)
+        {
+            third = second;
+            second = arr[i];
+        }
+  
+        else if (arr[i] > third)
+            third = arr[i];
+    }
+  
+}
+
+//At least two greater elements
+
+#include<iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+int main()
+{
+    int t,s;
+    cin>>t;
+    for(int s=0;s<t;s++){
+        int n;
+        cin>>n;
+        int a[n];
+        for(int i =0;i<n;i++){
+            cin>>a[i];
+        }
+        sort(a,a+n);
+        for(int i=0;i<n-2;i++){
+            cout<<a[i]<<" ";
+        }
+        cout<<endl;
+    }
+	return 0;
+}
+
+// CPP program to find mean and median of an array
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Function for calculating mean
+double findMean(int a[], int n)
+{
+	int sum = 0;
+	for (int i = 0; i < n; i++) 
+		sum += a[i];
+	
+	return (double)sum/(double)n;
+}
+
+// Function for calculating median
+double findMedian(int a[], int n)
+{
+	// First we sort the array
+	sort(a, a+n);
+
+	// check for even case
+	if (n % 2 != 0)
+	return (double)a[n/2];
+	
+	return (double)(a[(n-1)/2] + a[n/2])/2.0;
+}
+
+// Driver program
+int main()
+{
+	int a[] = { 1, 3, 4, 2, 7, 5, 8, 6 };
+	int n = sizeof(a)/sizeof(a[0]);
+	cout << "Mean = " << findMean(a, n) << endl; 
+	cout << "Median = " << findMedian(a, n) << endl; 
+	return 0;
+}
+
+//Minimum Product of k Integers
+
+#include<iostream>
+#include <bits/stdc++.h>
+#include<math.h>
+
+using namespace std;
+int main()
+ {
+	int t,s;
+	cin>>t;
+	for(int i=0;i<t;i++)
+	{
+	    int n;
+	    cin>>n;
+	    int a[n];
+	    for(int i=0;i<n;i++)
+	    {
+	        cin>>a[i];
+	    }
+	    int k;
+	    cin>>k;
+	    long long ans=1;
+        sort(a,a+n);
+	    for(int i=0;i<k;i++)
+	    {
+            ans= (a[i]*ans)%1000000007;
+        }
+	    
+	    cout<<ans<<endl;
+	}
+	return 0;
+}
+
+// Dated : June 25 
+
+// C program to find second largest 
+// element in an array
+ 
+ 					//DO IT IN THIS MANNER ONLY
+#include <stdio.h>
+#include <limits.h> 
+ 
+void print2largest(int arr[], int arr_size)
+{
+    int i, first, second;
+ 
+    /* There should be atleast two elements */
+    if (arr_size < 2)
+    {
+        printf(" Invalid Input ");
+        return;
+    }
+ 
+    first = second = INT_MIN;
+    for (i = 0; i < arr_size ; i ++)
+    {
+        /* If current element is smaller than first
+           then update both first and second */
+        if (arr[i] > first)
+        {
+            second = first;
+            first = arr[i];
+        }
+ 
+        /* If arr[i] is in between first and 
+           second then update second  */
+        else if (arr[i] > second && arr[i] != first)
+            second = arr[i];
+    }
+    if (second == INT_MIN)
+        printf("There is no second largest element\n");
+    else
+        printf("The second largest element is %dn", second);
+}
+ 
+// Find missing smallest number
+
+int missingNumber(int a[], int n, int m){
+	if(a[0]!=0){
+		return 0;
+	}
+
+	for(int i =0;i<n;i++){
+		if(a[i+1]-a[i]!=1){
+			return a[i]+1 ;
+		}
+	}
 }
