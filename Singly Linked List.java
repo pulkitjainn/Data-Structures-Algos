@@ -1,3 +1,6 @@
+LinkedList
+
+// Dated : June 25
 
 //LinkedList
 class LinkedList
@@ -13,6 +16,7 @@ class LinkedList
         }
     }
 }
+
 //Insertion at front
 public void push(int new_data)
 {
@@ -20,6 +24,7 @@ public void push(int new_data)
     new_node.next = head;
     head = new_node;
 }
+
 //Insertion after a given node
 public void insertAfter(Node prev_node, int new_data)
 {
@@ -32,6 +37,7 @@ public void insertAfter(Node prev_node, int new_data)
  	new_node.next = prev_node.next;
  	prev_node.next = new_node;
 }
+
 //Insertion at the end
 public void append(int new_data)
 {
@@ -48,6 +54,7 @@ public void append(int new_data)
  	last.next = new_node;
     return;
 }
+
 //Deleting a node
 void deleteNode(int key){
 	Node temp = head, prev = null;
@@ -61,27 +68,43 @@ void deleteNode(int key){
         prev = temp;
         temp = temp.next;
     }    
- 	if (temp == null) return;
+ 	if (temp == null) 
+        return;
  	prev.next = temp.next;
 }
+
 //Delete a Linked List node at a given position
+    //Starting pos is 0 in this code
 void deleteNode(int position)
     {
     	if (head == null)
             return;
+
  		Node temp = head;
  		if (position == 0)
         {
             head = temp.next;   // Change head
             return;
         }
+
         for (int i=0; temp!=null && i<position-1; i++)
             temp = temp.next;
+
  		if (temp == null || temp.next == null)
             return;
- 		Node next = temp.next.next;
+ 		
+        Node next = temp.next.next;
  		temp.next = next;  
  	}
+
+//Write a function to delete a Linked List
+
+void deleteList()
+    {
+        head = null;
+    }
+
+
 //Cal length of linkedlist
  	//iterative
 public int getCount()
@@ -95,6 +118,7 @@ public int getCount()
         }
         return count;
     }
+
     //recursive
 public int getCountRec(Node node)
     {
@@ -102,11 +126,14 @@ public int getCountRec(Node node)
             return 0;
  		return 1 + getCountRec(node.next);
     }
+
     /* Wrapper over getCountRec() */
     public int getCount()
     {
         return getCountRec(head);
     }
+
+
 //Search an element
     //iterative
 public boolean search(Node head, int x)
@@ -120,7 +147,148 @@ public boolean search(Node head, int x)
         }
         return false;    //data not found
     }
+    
     //recursive
+public boolean search(Node head, int x)
+    {
+        // Base case
+        if (head == null)
+            return false;
+ 
+        // If key is present in current node,
+        // return true
+        if (head.data == x)
+            return true;
+ 
+        // Recur for remaining list
+        return search(head.next, x);
+    }
+
+
+//Function to get Nth node in a Linked List
+public int GetNth(int index)
+    {
+        Node current = head;
+        int count = 0; 
+        while (current != null)
+        {
+            if (count == index)
+                return current.data;
+            count++;
+            current = current.next;
+        }
+        return 0;
+    }
+
+//Program for n’th node from the end of a Linked List
+int getNthFromLast(Node head, int n)
+    {
+        Node temp = head;
+        Node tempp = head;
+        
+        for(int i =0;i<n && temp!=null;i++){
+            temp=temp.next;
+        }
+        while(temp!=null){
+            temp=temp.next;
+            tempp=tempp.next;
+        }
+        return tempp.data;
+    }
+
+//Finding middle element in a linked list
+int getMiddle(Node head)
+    {
+        if(head==null){
+            return 0;
+        }
+        Node fast = head;
+        Node slow = head;
+        
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        return slow.data;    
+    }
+
+//Write a function that counts the number of times a given int occurs in a Linked List
+int count(Node head, int searchFor){
+    Node temp = head;
+    int c=0;
+    while(temp!=null){
+        if(temp.data == searchFor){
+            c++;
+        }
+        temp=temp.next;
+    }
+    return c;
+}
+
+//Detect Loop in linked list
+int detectLoop(Node head)
+  {
+    Node temp = head;  
+    HashSet<Node> s = new HashSet<Node>();
+
+    while(temp!=null){
+        if(s.contains(temp)){
+            return 1;
+        }
+        s.add(temp);
+        temp = temp.next;
+    }
+    return 0;
+    }
+
+//Dated : June 26
+
+//Remove duplicate element from sorted Linked List
+
+Node removeDuplicates(Node head)
+    {
+        if(head==null){
+            return null;
+        }
+        Node temp = head;
+        while(temp.next!=null){
+            if(temp.data==temp.next.data){
+                temp.next=temp.next.next;
+            }
+            else{
+                temp=temp.next;    
+            }
+        }
+        return head;
+    }    
+
+//Remove duplicates from an unsorted linked list
+
+Node removeDuplicates(Node head)
+    {
+        if(head==null){
+            return null;
+        }
+        Node temp=head.next;
+        Node prev = head;
+        HashSet<Integer> s = new HashSet<Integer>();
+        
+        s.add(head.data);
+        while(temp!=null){
+            if(s.contains(temp.data)){
+                temp=temp.next;
+                prev.next = temp;
+                
+            }
+            else{
+                s.add(temp.data);
+                prev=temp;
+                temp=temp.next;
+            }
+        }
+        return head;
+    }
 
 //Swap nodes in a linked list without swapping data
 public void swapNodes(int x, int y)
@@ -147,106 +315,72 @@ public void swapNodes(int x, int y)
             prevY.next = currX;
         else
             head = currX;
- 		Node temp = currX.next;
+        Node temp = currX.next;
         currX.next = currY.next;
         currY.next = temp;
     }
- public boolean search(Node head, int x)
+
+//Pairwise swap elements of a given linked list
+
+void pairWiseSwap()
     {
-        // Base case
-        if (head == null)
-            return false;
+        Node temp = head;
  
-        // If key is present in current node,
-        // return true
-        if (head.data == x)
-            return true;
+        while (temp != null && temp.next != null) {
+            int k = temp.data;
+            temp.data = temp.next.data;
+            temp.next.data = k;
+            temp = temp.next.next;
+         }
+    }    
+
+
+//Move last element to front of a given Linked List
+
+ void moveToFront()
+    {
+        if(head == null || head.next == null) 
+              return;
  
-        // Recur for remaining list
-        return search(head.next, x);
+        Node secLast = null;
+        Node last = head;
+
+        while (last.next != null)  
+        {
+           secLast = last;
+           last = last.next; 
+        }
+        secLast.next = null;
+        last.next = head;
+        head = last;
+    }          
+           
+
+//Write a function to get the intersection point of two Linked Lists.
+
+int intersectPoint(Node headA, Node headB)
+    {
+        HashSet<Integer> s = new HashSet<Integer> ();
+        
+        while(headA!=null){
+            s.add(headA.data);
+            headA=headA.next;
+        }
+        while(headB!=null){
+            if(s.contains(headB.data)){
+                return headB.data;
+            }
+            headB=headB.next;
+        }
+        
+        return -1;
     }
 
-//Function to get Nth node in a Linked List
-public int GetNth(int index)
-    {
-        Node current = head;
-        int count = 0; 
-        while (current != null)
-        {
-            if (count == index)
-                return current.data;
-            count++;
-            current = current.next;
-        }
-        /* if we get to this line, the caller was asking
-        for a non-existent element so we assert fail */
-        assert(false);
-        return 0;
-    }
-//Function to find the middle of a given linked list 
-void printMiddle()
-    {
-        Node slow_ptr = head;
-        Node fast_ptr = head;
-        if (head != null)
-        {
-            while (fast_ptr != null && fast_ptr.next != null)
-            {
-                fast_ptr = fast_ptr.next.next;
-                slow_ptr = slow_ptr.next;
-            }
-            System.out.println("The middle element is [" +
-                                slow_ptr.data + "] \n");
-        }
-    }
-//Function for for n’th node from the end of a Linked List
-void printNthFromLast(int n)
-    {
-        Node main_ptr = head;
-        Node ref_ptr = head;
- 
-        int count = 0;
-        if (head != null)
-        {
-            while (count < n)
-            {
-                if (ref_ptr == null)
-                {
-                    System.out.println(n+" is greater than the no "+
-                                      " of nodes in the list");
-                    return;
-                }
-                ref_ptr = ref_ptr.next;
-                count++;
-            }
-            while (ref_ptr != null)
-            {
-                main_ptr = main_ptr.next;
-                ref_ptr = ref_ptr.next;
-            }
-            System.out.println("Node no. "+n+" from last is "+
-                               main_ptr.data);
-        }
-    }
-//Function to delete a Linked List
-void deleteList()
-    {
-        head = null;
-    }
-//Function that counts the number of times a given int occurs in a Linked List
-int count(int val)
-    {
-        Node current = head;
-        int count = 0;
-        while (current != null)
-        {
-            if (current.data == val)
-                count++;
-            current = current.next;
-        }
-        return count;
-    }
+
+
 //Reverse a linked list
+    // IMPORTANT QUESTION : https://www.geeksforgeeks.org/reverse-a-linked-list/
+    
     //iterative
 Node reverse(Node node) {
         Node prev = null;
@@ -262,19 +396,19 @@ Node reverse(Node node) {
         return node;
     }
 
-//Detect Loop in linked list 
-int detectLoop(Node head){
-	Node h = head;
-	HashSet<Node> s = new HashSet<Node>();
-	while(h!== null){
-		if(s.contains(h)){
-			return 1; //1 for true
-		}
-		s.add(h);
-		h=h.next;
-	}
-	return 0;//0 for false
+    //recursive
+void printRecRevList(Node head){
+    if (node==null) {
+        return; 
+    }
+    printRecRevList(head.next);
+    System.out.print(head.data+" ");
 }
+
+
+
+----
+
 //Merge two sorted Linkedlists
 Node MergeLists(Node headA, Node headB) {
     if (headA == null){
@@ -292,85 +426,7 @@ Node MergeLists(Node headA, Node headB) {
         return headB;
     }
 }
-//Function to get the intersection point of two Linked Lists
-int getIntersectPoint(Node headA, Node headB){
-	Node nodeA = headA;
-	Node nodeB = headB;
-	HashSet<Node> s = new HashSet<Node>();
-	while(nodeA!=null){
-		s.add(nodeA);
-		nodeA=nodeA.next;
-	}
-	while(nodeB!=null){
-		if(s.contains(nodeB)){
-			return nodeB.data;
-		}
-		nodeB=nodeB.next;
-	}
-	return -1;
-}
-//recursive function to print reverse of a Linked List
-void printRecRevList(Node head){
-	if (node==null) {
-		return; 
-	}
-	printRecRevList(head.next);
-	System.out.print(head.data+" ");
-}
-//Remove duplicates from a sorted linked list
-Node removeDuplicates(Node head){
-	Node current = head;
-	while(current.next!=null){
-		if(current.data == current.next.data){
-			Node temp= current.next.next;
-			current.next = temp;
-		}
-		else{
-		    current=current.next;
-    
-		}
-	}
-	return head;
-}
-//Function to Remove duplicates from an unsorted linked list
-Node removeDuplicates(Node head){
-	Node current = head;
-    Node prev = null;
-	HashSet<Integer> s = new HashSet<Integer>();
-	while(current!=null){
-		if(s.contains(current.data)){
-			prev.next = current.next;
-		}
-		else{
-		    s.add(current.data);
-		    prev = current;
-		}
-		current=current.next;
-    }
-	return head;
-}
-//Funtion to Pairwise swap elements of a given linked list
-Node pairSwap(Node head){
-	Node current = head;
-	while(current!=null && current.next!=null){
-		int k = current.data;
-		current.data=current.next.data;
-		current.next.data=k;
-		current=current.next.next;
-	}
-}
-//Move last element to front of a given Linked List
-Node moveToFront(Node head){
-	Node current = head;
-	Node seclast = null;
-	while(current.next!=null){
-		seclast=current;
-		current=current.next;
-	}
-	seclast.next=null;
-	current.next=head;
-	head= current;
-}
+
 //Funtion to Delete alternate nodes of a Linked List
 Node DeleteAlt(Node head){
 	Node prev = head;
@@ -477,6 +533,7 @@ void segregateEvenOdd(){
 	    }
 	    head = h;
 	}
+
 //Remove loop in Linked List //import java.util.*; use this please
 int removeTheLoop(Node node) {
 	      Node h = node;
