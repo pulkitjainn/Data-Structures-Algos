@@ -1,4 +1,4 @@
-LinkedList
+Singly Linked List
 
 // Dated : June 25
 
