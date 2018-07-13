@@ -1172,7 +1172,6 @@ int missingNumber(int a[], int n, int m){
 	if(a[0]!=0){
 		return 0;
 	}
-
 	for(int i =0;i<n;i++){
 		if(a[i+1]-a[i]!=1){
 			return a[i]+1 ;

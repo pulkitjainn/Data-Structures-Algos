@@ -319,4 +319,74 @@ int size(Node node){
 	}
 	return (size(node.left) + 1 + size(node.right));
 }
-//
+
+
+
+Dated : July 11
+
+//level order traversal 
+
+void levelOrder(Node node) 
+    {
+        Queue<Node> q = new LinkedList<Node>();
+        q.add(node);
+        while(!q.isEmpty()){
+            Node temp = q.poll();
+            System.out.print(temp.data+" ");
+            if(temp.left!=null){
+                q.add(temp.left);
+            }
+            if(temp.right!=null){
+                q.add(temp.right);
+            }
+        }
+    }
+
+Dated : July 14 
+
+//Find sum of all left leaves in a given Binary Tree
+
+public int leftLeafSum(Node node)
+    {
+        if(node == null){
+            return 0;
+        }
+        int ans = 0;
+        if(check(node.left)){
+            ans = node.left.data;
+        }
+        return ans + leftLeafSum(node.left) + leftLeafSum(node.right);
+    }
+    public static boolean check(Node node){
+        if(node==null){
+            return false;
+        }
+        if(node.left==null && node.right == null){
+            return true;
+        }
+        return false;
+    }
+
+//Find sum of all right leaves in a given Binary Tree
+
+
+public int rightLeafSum(Node node)
+    {
+        if(node == null){
+            return 0;
+        }
+        int ans = 0;
+        if(check(node.right)){
+            ans = node.right.data;
+        }
+        return ans + rightLeafSum(node.left) + rightLeafSum(node.right);
+    }
+    public static boolean check(Node node){
+        if(node==null){
+            return false;
+        }
+        if(node.left==null && node.right == null){
+            return true;
+        }
+        return false;
+    }
