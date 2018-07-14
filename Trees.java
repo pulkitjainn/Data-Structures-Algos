@@ -598,3 +598,31 @@ public static int perfect(Node root, Node node, int dep){
         return false;
         
     }
+
+//check for duplicate values in tree
+
+static boolean check(Node root, HashSet<Integer> h){
+        if(root ==null){
+            return false;
+        }
+        if(h.contains(root.key)){
+          return true;
+        }else{
+            h.add(root.key);
+        }
+        return check(root.left,h) || check(root.right,h);
+    }
+
+//Check whether two treees are Mirror or not
+boolean areMirror(Node a, Node b) 
+    {
+        if (a == null && b == null)
+            return true;
+ 
+        if (a == null || b == null) 
+            return false;
+
+        return a.data == b.data
+                && areMirror(a.left, b.right)
+                && areMirror(a.right, b.left);
+    }
