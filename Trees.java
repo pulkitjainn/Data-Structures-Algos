@@ -626,3 +626,57 @@ boolean areMirror(Node a, Node b)
                 && areMirror(a.left, b.right)
                 && areMirror(a.right, b.left);
     }
+
+Dated : July 15
+
+//Print level of all nodes
+
+    public static int getLevelUtil(Node node, int data, int level) {
+        if (node == null)
+            return 0;
+        if (node.key == data)
+            return level;
+        int downlevel = getLevelUtil(node.left, data, level + 1);
+        if (downlevel != 0)
+            return downlevel;
+        downlevel = getLevelUtil(node.right, data, level + 1);
+        return downlevel;
+    }
+  
+    public static int getLevel(Node node, int data,int i) {
+        return getLevelUtil(node, data, i);
+    }
+
+public static void printAllNodesLevel(Node root,int i){
+    if(root == null){
+        return;
+    }
+    i++;
+    System.out.println("Level of Node "+root.key+" is "+getLevel(root,root.key,i));
+    printAllNodesLevel(root.left,i);
+    printAllNodesLevel(root.right,i);
+}
+
+//Print all leaf nodes of a Binary Tree from left to right
+
+public static void printLeafLeftToRight(Node node){
+    if(node==null){
+        return;
+    }
+
+    if(isLeaf(node)){
+        System.out.println(node.key);
+    }
+    printLeafLeftToRight(node.left);
+    printLeafLeftToRight(node.right);
+}
+
+public static boolean isLeaf(Node node){
+    if(node == null){
+        return false;
+    }
+    if(node.left==null && node.right==null){
+        return true;
+    }
+    return false;
+}
