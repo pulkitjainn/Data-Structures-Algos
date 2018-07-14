@@ -390,3 +390,211 @@ public int rightLeafSum(Node node)
         }
         return false;
     }
+
+// Count number of leaf nodes
+
+int countLeaves(Node node) 
+    {
+         if(node ==null){
+             return 0;
+         }
+         int ans = 0;
+         if(isLeaf(node)){
+             ans++;
+         }
+         return ans + countLeaves(node.left) + countLeaves(node.right);
+    }
+    
+    static boolean isLeaf(Node node){
+        if(node==null){
+            return false;
+        }
+        if(node.left==null && node.right==null){
+            return true;
+        }
+        return false;
+    }
+
+//Count full nodes
+
+    int countFullNodes(Node node) 
+    {
+         if(node ==null){
+             return 0;
+         }
+         int ans = 0;
+         if(isFull(node)){
+             ans++;
+         }
+         return ans + countFullNodes(node.left) + countFullNodes(node.right);
+    }
+    
+    static boolean isFull(Node node){
+        if(node==null){
+            return false;
+        }
+        if(node.left!=null && node.right!=null){
+            return true;
+        }
+        return false;
+    }
+
+//Count number of nodes greater than x
+public static int numNodeGreater(Node root,int x){
+  if(root==null){
+    return 0;
+  }
+  int ans =0;
+  if(root.key>x){
+    ans++;
+  }
+
+  return ans + numNodeGreater(root.left,x) + numNodeGreater(root.right,x);
+
+    }
+
+
+//Check if leaf order traversal is same or not
+
+public static boolean leafTraversal(Node node1,Node node2){
+  if(node1 == null || node2==null){
+    return false;
+  }
+  ArrayList<Integer> arr1 = new ArrayList<Integer>();
+  ArrayList<Integer> arr2 = new ArrayList<Integer>();
+
+  getInorder(node1,arr1);
+  getInorder(node2,arr2);
+
+  if(arr1.size()!=arr2.size()){
+    return false;
+  }
+  else{
+    for(int i = 0;i<arr1.size();i++){
+      if(arr1.get(i)!=arr2.get(i)){
+        return false;
+      }
+    }
+    return true;
+  }
+}
+
+public static void getInorder(Node node,ArrayList<Integer> arr){
+        if (node == null)
+            return;
+        getInorder(node.left,arr);
+
+        if(isLeaf(node)){
+          arr.add(node.key);
+        }
+        getInorder(node.right,arr);
+    }
+    
+public static boolean isLeaf(Node node){
+  if(node==null){
+    return false;
+  }
+  if(node.left==null && node.right==null){
+    return true;
+  }
+  return false;
+}
+
+//Check whether a given tree is perfect or not
+
+public static boolean returnAns(Node node){
+    if(nodeCount(node) == perfect(node,node,findDepth(node))){
+        return true;
+    }
+    return false;
+}
+
+public static int nodeCount(Node node)
+    {
+        if (node == null)
+            return 0;
+        else
+            return(nodeCount(node.left) + 1 + nodeCount(node.right));
+    }
+ 
+public static int getLevelUtil(Node node, int key, int level) {
+        if (node == null)
+            return 0;
+  
+        if (node.key == key)
+            return level;
+  
+        int downlevel = getLevelUtil(node.left, key, level + 1);
+        if (downlevel != 0)
+            return downlevel;
+  
+        downlevel = getLevelUtil(node.right, key, level + 1);
+        return downlevel;
+    }
+  
+public static int getLevel(Node node, int key) {
+        return getLevelUtil(node, key, 1);
+    }
+
+public static int findDepth(Node node){
+  int d = 0;
+    while (node != null)
+    {
+      d++;
+      node = node.left;
+  }
+    return d;
+}
+
+public static boolean isLeaf(Node node){
+  if(node==null){
+    return false;
+  }
+  if(node.left==null && node.right==null){
+    return true;
+  }
+  return false;
+}
+
+public static boolean isFull(Node node){
+  if(node==null){
+    return false;
+  }
+  if(node.left!=null && node.right!=null){
+    return true;
+  }
+  return false;
+}
+
+public static int perfect(Node root, Node node, int dep){
+    int ans = 0;
+  if(node != null){
+      if(isLeaf(node) && dep==getLevel(root,node.key)){
+            ans++;
+      }
+        else if(isFull(node)){
+            ans++;
+        }
+        else{
+            ans = 0;
+        }
+        return ans + perfect(root,node.left,dep) + perfect(root,node.right,dep);
+    }
+  return ans;
+
+}
+
+//check if it is a full tree or not
+
+  boolean isFullTree(Node node)
+    {
+        if(node ==null){
+            return true;
+        }
+        if( (node.left==null && node.right==null) || (node.left!=null && node.right!=null)){
+            return isFullTree(node.left) && isFullTree(node.right);
+        }
+        
+        return false;
+        
+    }
