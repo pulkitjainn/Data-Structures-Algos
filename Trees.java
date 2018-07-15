@@ -680,3 +680,118 @@ public static boolean isLeaf(Node node){
     }
     return false;
 }
+
+//Print Binary Tree levels in sorted order
+
+public static void sortedLevelOrder(Node root)
+    {
+        if(root == null)
+            return;
+        TreeSet<Integer> ts = new TreeSet<Integer>();
+        Queue<Node> q =new LinkedList<Node>();
+        q.add(root);
+        while(true)
+        {
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;   
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                ts.add(node.key);
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }
+            System.out.println(ts);
+            ts.clear();
+        }
+    }
+
+//LeftView of a binary tree
+
+int maxlevel =0;
+    void leftView(Node root){
+        View(root,1);
+    }
+    void View(Node node,int level){
+        if(node == null){
+            return;
+        }
+        if(maxlevel<level){
+            System.out.print(node.data + " ");
+            maxlevel=level;
+        }
+        View(node.left,level+1);
+        View(node.right,level+1);
+    }
+
+
+//RightView of binary tree
+
+    int maxlevel=0;
+    void rightView(TreeNode node) {
+        View(node,1);
+    }
+    
+    void View(TreeNode node,int level){
+        if(node == null){
+            return;
+        }
+        if(maxlevel<level){
+            System.out.print(node.data + " ");
+            maxlevel=level;
+        }
+        View(node.right,level+1);
+        View(node.left,level+1);
+    }
+
+//Print nodes at odd
+void nodeAtOdd(Node root){
+        if(root == null)
+            return;
+        Queue<Node> q =new LinkedList<Node>();
+        q.add(root);
+        int level=1;
+        while(true)
+        {
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                if(level%2!=0){
+                    System.out.print(node.data + " ");
+                }
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }
+            level++;
+        }
+    }
+
+//Print middle level of perfect binary tree without finding height
+
+void printLevelBinaryTree(Node node){
+    printIt(node,node);
+}
+
+void printIt(Node a,Node b){
+    if(a==null && b==null){
+        return;
+    }
+    if(b.left==null && b.right==null){
+        System.out.print(a.key+" ");
+        return;
+    }
+    printIt(a.left,a.left.left);
+    printIt(a.right,a.right.right);
+}
