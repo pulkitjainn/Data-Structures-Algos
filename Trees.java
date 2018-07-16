@@ -289,6 +289,7 @@ void DeleteTree(Node node){
 	System.out.println("Node Deleted :" + node.data);
 	node = null;
 }
+
 //Max depth or height of a tree
 int height(Node node){
 	if(node == null){
@@ -302,6 +303,7 @@ int height(Node node){
 	else
 		return (rDepth+1);
 }
+
 //Check whether two trees are identical
 boolean isIdentical(Node a, Node b){
 	if(a==null && b==null){
@@ -312,6 +314,7 @@ boolean isIdentical(Node a, Node b){
 	}
 	return false;
 }
+
 //Calculate the size
 int size(Node node){
 	if (node == null){
@@ -368,7 +371,6 @@ public int leftLeafSum(Node node)
     }
 
 //Find sum of all right leaves in a given Binary Tree
-
 
 public int rightLeafSum(Node node)
     {
@@ -732,6 +734,7 @@ int maxlevel =0;
 
 //RightView of binary tree
 
+//recursive
     int maxlevel=0;
     void rightView(TreeNode node) {
         View(node,1);
@@ -748,6 +751,30 @@ int maxlevel =0;
         View(node.right,level+1);
         View(node.left,level+1);
     }
+
+//iterative
+    void rightView(TreeNode root) 
+    {
+        if (root == null)
+            return;
+             
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) 
+        {   
+            int n = queue.size();
+            for (int i = 1; i <= n; i++) {
+                TreeNode temp = queue.poll();
+                if (i == 1)
+                    System.out.print(temp.data + " ");
+                if (temp.right != null)
+                    queue.add(temp.right);
+                if (temp.left != null)
+                    queue.add(temp.left);
+            }
+        }
+    }
+
 
 //Print nodes at odd
 void nodeAtOdd(Node root){
@@ -778,6 +805,8 @@ void nodeAtOdd(Node root){
         }
     }
 
+Dated : July 16
+
 //Print middle level of perfect binary tree without finding height
 
 void printLevelBinaryTree(Node node){
@@ -795,3 +824,311 @@ void printIt(Node a,Node b){
     printIt(a.left,a.left.left);
     printIt(a.right,a.right.right);
 }
+
+//Print nodes at k distance from root
+
+//Iterative
+void printKdistance(Node root, int k)
+     {
+        if(root == null)
+            return;
+        Queue<Node> q =new LinkedList<Node>();
+        int level =0;
+        q.add(root);
+        while(true)
+        {
+
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;
+            
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                if(level==k){
+                    System.out.print(node.data + " ");
+                }
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }   
+             level++;
+        }
+         
+     }
+
+//Recursive
+void printKDistant(Node node, int k) 
+    {
+        if (node == null)
+            return;
+        if (k == 0) 
+        {
+            System.out.print(node.data + " ");
+            return;
+        } 
+        else
+        {
+            printKDistant(node.left, k - 1);
+            printKDistant(node.right, k - 1);
+        }
+    }
+
+
+Dated : July 17
+
+//Print all nodes that don’t have sibling
+
+void printSibling(Node root)
+    {
+        if(root == null)
+            return;
+        Queue<Node> q =new LinkedList<Node>();
+        TreeSet<Integer> t = new TreeSet<Integer>();
+        q.add(root);
+        while(true)
+        {
+
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;
+            
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                if(node.left!=null && node.right==null){
+                    t.add(node.left.data);
+                }
+                if(node.left==null && node.right!=null){
+                    t.add(node.right.data);
+                }
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }
+        }
+        if(t.isEmpty()){
+            System.out.print(-1);
+            return ;
+        }
+        Iterator<Integer> itr=t.iterator();
+        while(itr.hasNext()){
+            System.out.print(itr.next() +" ");
+        }
+    }
+
+// Check if all leaf nodes are at same level or not
+
+boolean check(Node root){
+        if(root == null)
+            return true;
+        Queue<Node> q =new LinkedList<Node>();
+        int level=1,ans=-1;
+        q.add(root);
+        while(true)
+        {
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                if(isLeaf(node)){
+                    if(ans ==-1){
+                        ans =level;
+                    }
+                    else{
+                        if(ans!=level){
+                            return false;
+                        }
+                    }
+                }
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }
+            level++;
+        }
+        return true;
+    }
+
+//Print corner nodes at each level // Print leftmost and rightmost nodes of a Binary Tree
+
+void printCorner(Node root) 
+    {
+        if (root == null)
+            return;
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) 
+        {   
+            int n = queue.size();
+            for (int i = 1; i <= n; i++) {
+                Node temp = queue.poll();
+                if (i == 1 || i==n)
+                    System.out.print(temp.key + " ");
+                if (temp.left != null)
+                    queue.add(temp.left);
+                if (temp.right != null)
+                    queue.add(temp.right);
+            }
+        }
+    }
+
+//Given a binary tree, print all root-to-leaf paths
+
+void printPaths(Node node) 
+    {
+        int path[] = new int[1000];
+        printPathsRecur(node, path, 0);
+    }
+    void printPathsRecur(Node node, int path[], int pathLen) 
+    {
+        if (node == null)
+            return;
+        path[pathLen] = node.data;
+        pathLen++;
+        if (node.left == null && node.right == null)
+            printArray(path, pathLen);
+        else
+        {
+            printPathsRecur(node.left, path, pathLen);
+            printPathsRecur(node.right, path, pathLen);
+        }
+    }
+    void printArray(int ints[], int len) 
+    {
+        int i;
+        for (i = 0; i < len; i++) 
+        {
+            System.out.print(ints[i] + " ");
+        }
+        System.out.println("");
+    }
+
+//Print nodes between two given level numbers of a binary tree
+
+void printLevels(Node root, int low,int high)
+     {
+        if(root == null)
+            return;
+        Queue<Node> q =new LinkedList<Node>();
+        int level =1;
+        q.add(root);
+        while(true)
+        {
+
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;
+            
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                if(level>=low && level<=high){
+                    System.out.print(node.data + " ");
+                }
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }   
+             level++;
+        }
+         
+     }
+
+//Nodes at Odd Levels
+public void nodeAtOdd(Node root)
+     {
+        if(root == null)
+            return;
+        Queue<Node> q =new LinkedList<Node>();
+        int level =1;
+        q.add(root);
+        while(true)
+        {
+
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;
+            
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                if(level%2!=0){
+                    System.out.print(node.data + " ");
+                }
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }   
+             level++;
+        }
+         
+     }
+
+//Check whether a binary tree is a full binary tree or not | Iterative Approach 
+
+boolean isFullTree(Node root)
+    {
+        if(root == null)
+            return false;
+        Queue<Node> q =new LinkedList<Node>();
+        q.add(root);
+        while(true)
+        {
+
+            int nodeCount = q.size();
+            if(nodeCount == 0)
+                break;
+            
+            while(nodeCount > 0)
+            {
+                Node node = q.peek();
+                if(!isLeaf(node) && !isFull(node)){
+                    return false;
+                }
+                q.remove();
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+                nodeCount--;
+            }
+        }
+        return true;
+    }
+    
+//Check if a given Binary Tree is SumTree
+
+int isSumTree(Node node) 
+    {
+        int ls, rs;
+  
+        if ((node == null) || (node.left == null && node.right == null))
+            return 1;
+  
+        ls = sum(node.left);
+        rs = sum(node.right);
+  
+        if ((node.data == ls + rs) && (isSumTree(node.left) != 0)
+                && (isSumTree(node.right)) != 0)
+            return 1;
+  
+        return 0;
+    }
