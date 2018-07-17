@@ -60,7 +60,10 @@ class BinaryTree
          */
     }
 }
+
+
 //Inorder Traversal
+
 void printInorder(Node node){
 	if(node==null){
 		return;
@@ -72,7 +75,10 @@ void printInorder(Node node){
 void printInorder(){
     printInorder(root);   
 }
+
+
 //Preorder Traversal
+
 void printPreorder(Node node){
 	if(node==null){
 		return;
@@ -84,7 +90,10 @@ void printPreorder(Node node){
 void printPostorder(){
     printPostorder(root);  
 }
+
+
 //Postorder Traversal
+
 void printPostorder(Node node){
 	if(node==null){
 		return;
@@ -96,22 +105,31 @@ void printPostorder(Node node){
 void printPostorder(){     
 	printPostorder(root);  
 }
+
+
 //Level Order--Breadth First Traversal
-void bfs(Node node){
-  Queue<Node> queue = new LinkedList<Node>();
-  queue.add(node);
-  while(!queue.isEmpty()){
-    Node temp = queue.poll();  // poll() removws the presnet head 
-    System.out.print(temp.data+" ");
-    if(temp.left!=null){
-      queue.add(temp.left);
+
+void printLevelOrder() 
+    {
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(root);
+        while (!queue.isEmpty()) 
+        {
+            Node tempNode = queue.poll();
+            System.out.print(tempNode.data + " ");
+ 
+            if (tempNode.left != null) {
+                queue.add(tempNode.left);
+            }
+ 
+            if (tempNode.right != null) {
+                queue.add(tempNode.right);
+            }
+        }
     }
-    if(temp.right!=null){
-      queue.add(temp.right);
-    }
-  }
-}
+
 //Level Order in seperate lines--Breadth First Traversal
+
 void levelOrderLineByLine(Node root)
     {
         if(root == null)
@@ -139,7 +157,10 @@ void levelOrderLineByLine(Node root)
             System.out.print("$ ");//as per the question of gfgs
         }
     }
+
+
 //Inorder Tree Traversal without Recursion
+
 void printInorderUsingStack(Node node){
     if(node==null){
         return;
@@ -162,29 +183,9 @@ void printInorderUsingStack(Node node){
         }      
     }
 }
-//Reverse Level Order Traversal (Function Problem)
-void reversePrint(Node node){
-  Node temp = node;
-  Queue<Node> queue = new LinkedList<Node>();
-  Stack<Node> s = new Stack<Node>();
-  queue.add(temp);
-  while(!queue.isEmpty()){
-    temp = queue.peek();
-    queue.remove();
-    s.push(temp);
-    if(temp.right!=null){ //NOTE : here right childs are added first
-      queue.add(temp.right);
-    }
-    if(temp.left!=null){
-      queue.add(temp.left);
-    }
-  }
-  while(!s.isEmpty()){
-    System.out.print(s.pop().data+ " ");
-  }
-}
 
 //Construct Tree from given Inorder and Preorder traversals
+
 static int preIndex = 0;
 Node buildTree(char in[],char pre[],int inStrt, int inEnd){
 	if(inStrt>inEnd){
@@ -203,7 +204,10 @@ Node buildTree(char in[],char pre[],int inStrt, int inEnd){
 
 	return tNode;
 }
+
+
 //Search method for the above
+
 int search(char arr[], int strt, int end, char value) 
     {
         int i;
@@ -214,7 +218,10 @@ int search(char arr[], int strt, int end, char value)
         }
         return i;
     }
+
+
 //Construct a tree from Inorder and Level order traversals
+
 Node constructTree(Node startNode, int[] levelOrder, int[] inOrder, int inStart, int inEnd) {
 	if(inStart>inEnd){
 		return;
@@ -246,7 +253,10 @@ Node constructTree(Node startNode, int[] levelOrder, int[] inOrder, int inStart,
 	startNode.left = constructTree(startNode, levelOrder, inOrder, inStart, index - 1);
 	startNode.right = constructTree(startNode, levelOrder, inOrder, index+1, inEnd);
 }
+
+
 //Construct Complete Binary Tree from its Linked List Representation
+
 BinaryTreeNode convertList2Binary(BinaryTreeNode node){
 	Queue<BinaryTreeNode> q = new Queue<BinaryTreeNode>();
 
@@ -277,7 +287,10 @@ BinaryTreeNode convertList2Binary(BinaryTreeNode node){
 		parent.right = rightChild;
 	}	
 }
+
+
 //Delete a tree
+
 void DeleteTree(Node node){
 	if(node == null){
 		return;
@@ -290,7 +303,9 @@ void DeleteTree(Node node){
 	node = null;
 }
 
+
 //Max depth or height of a tree
+
 int height(Node node){
 	if(node == null){
 		return 0;
@@ -304,7 +319,9 @@ int height(Node node){
 		return (rDepth+1);
 }
 
+
 //Check whether two trees are identical
+
 boolean isIdentical(Node a, Node b){
 	if(a==null && b==null){
 		return true;
@@ -315,7 +332,9 @@ boolean isIdentical(Node a, Node b){
 	return false;
 }
 
+
 //Calculate the size
+
 int size(Node node){
 	if (node == null){
 		return 0;
@@ -1131,4 +1150,331 @@ int isSumTree(Node node)
             return 1;
   
         return 0;
+    }
+
+
+//Print Postorder traversal from given Inorder and Preorder traversals
+
+void printPostOrder(int in[], int pre[], int n)
+{
+   int root = search(in, pre[0], n);
+    if (root != 0)
+      printPostOrder(in, pre+1, root);
+    if (root != n-1)
+      printPostOrder(in+root+1, pre+root+1, n-root-1);
+    cout << pre[0] << " ";
+}
+
+int search(int arr[], int x, int n)
+{
+    for (int i = 0; i < n; i++)
+      if (arr[i] == x)
+         return i;
+    return -1;
+}
+
+
+//Populate Inorder Successor for all nodes
+
+static Node next = null;
+
+    void populateNext(Node node) 
+    {
+        if (node != null) 
+        {
+            populateNext(node.right);
+            node.next = next;
+            next = node;
+            populateNext(node.left);
+        }
+    }
+
+    //my method
+
+class GFG
+{
+    public static void populateNext(Node root)
+    {
+        ArrayList<Node> arr = new ArrayList<Node>();
+        storeInorder(root,arr);
+        populateNextNode(root,arr);
+    }
+    static void storeInorder(Node node, ArrayList<Node> arr) {
+        if (node == null) {
+            return;
+        }
+        storeInorder(node.left, arr);
+        arr.add(node);
+        storeInorder(node.right, arr);
+    }
+    static int getIndex(ArrayList<Node> arr,Node x){
+      int i =-1,ans=0;
+      for(i=0;i<arr.size();i++){
+        if(arr.get(i)==x){
+          ans =  i;
+        }
+      }
+      return ans;
+    }
+    public static void populateNextNode(Node node,ArrayList<Node> arr){
+      if (node == null) {
+            return;
+        }
+        populateNextNode(node.left, arr);
+        int i = getIndex(arr,node);
+        if(i < arr.size()-1){
+            node.next = arr.get(i+1);
+        }
+        else if(i==arr.size()-1){
+            node.next = null;
+        }
+        populateNextNode(node.right, arr);
+    } 
+}
+
+
+//Replace each node in binary tree with the sum of its inorder predecessor and successor NOT TESTED
+
+ArrayList<Integer> arr = new ArrayList<Integer>();
+arr.add(0);
+void printInorder(Node node,ArrayList<Integer> arr){
+  if(node==null){
+    return;
+  }
+  printInorder(node.left);
+  arr.add(node.key);
+  printInorder(node.right);
+}
+arr.add(0);
+
+
+void myMainFunct(Node node, ArrayList<Integer> arr){
+  if(node==null){
+    return;
+  }
+  
+  myMainFunct(node.left,arr);
+  int j = getIndex(arr,node.key)
+  node.key = arr.get(j-1) + arr.get(j+1);
+  myMainFunct(node.right,arr);  
+}
+
+
+int getIndex(ArrayList<Integer> arr,int x){
+  int i =-1;
+  for(i=0;i<arr.size();i++){
+    if(arr.get(i)==x){
+      return i;
+    }
+  }
+  return i;
+}
+
+
+Dated : July 18
+
+//Find n-th node of inorder traversal     NOT TESTED
+
+static int count = 0;
+void NthInorder(Node node, int n)
+{
+    if (node == NULL)
+        return;
+    if (count <= n) {
+        NthInorder(node.left, n);
+        count++;
+ 
+        if (count == n)
+            System.out.print(node.data);
+ 
+        NthInorder(node.right, n);
+    }
+}
+
+
+//Find n-th node in Postorder traversal of a Binary Tree
+
+static int count = 0;
+void NthPostordernode(Node root, int N)
+{
+    if (root == NULL)
+        return;
+ 
+    if (count <= N) {
+ 
+        NthPostordernode(root.left, N);
+        NthPostordernode(root.right, N);
+ 
+        count++;
+        if (count == N)
+            System.out.print(root.data);
+    }
+}
+
+
+//ZigZag Level Order Traversal BT
+
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) {
+ *      val = x;
+ *      left=null;
+ *      right=null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode A) {
+        if(A==null){
+            return null;
+        }
+        Stack<TreeNode> current = new Stack<TreeNode>();
+        Stack<TreeNode> next = new Stack<TreeNode>();
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> subans = new ArrayList<Integer>();
+      
+        current.push(A);
+        boolean lefttoright = true;
+        
+        while(!current.isEmpty()){
+            TreeNode temp = current.pop();
+            subans.add(temp.val);
+            
+            if(lefttoright){
+                if(temp.left!=null){
+                    next.push(temp.left);
+                }
+                if(temp.right!=null){
+                    next.push(temp.right);
+                }
+            }
+            else{
+                if(temp.right!=null){
+                    next.push(temp.right);
+                }
+                if(temp.left!=null){
+                    next.push(temp.left);
+                }
+            }
+            if(current.isEmpty()){
+                lefttoright=!lefttoright;
+                
+                Stack<TreeNode> tempo = current;
+                current = next;
+                next = tempo;
+                ans.add(subans);
+                subans = new ArrayList<Integer>();  
+            }
+        }
+        return ans;
+    }
+}
+
+
+//Level order traversal in spiral form
+
+void printSpiral(Node node) 
+    {
+        if (node == null) 
+            return;   
+ 
+        Stack<Node> s1 = new Stack<Node>(); 
+        Stack<Node> s2 = new Stack<Node>();
+ 
+        s1.push(node);
+ 
+        while (!s1.empty() || !s2.empty()) 
+        {
+            while (!s1.empty()) 
+            {
+                Node temp = s1.peek();
+                s1.pop();
+                System.out.print(temp.data + " ");
+ 
+                if (temp.right != null) 
+                    s2.push(temp.right);
+                 
+                if (temp.left != null) 
+                    s2.push(temp.left);
+                 
+            }
+
+            while (!s2.empty()) 
+            {
+                Node temp = s2.peek();
+                s2.pop();
+                System.out.print(temp.data + " ");
+ 
+                if (temp.left != null)
+                    s1.push(temp.left);
+                if (temp.right != null)
+                    s1.push(temp.right);
+            }
+        }
+    }
+
+//Level Order Traversal Line by Line
+
+static void levelOrder(Node root) {
+    if (root == null)
+      return;
+ 
+    Queue<Node> q = new LinkedList<>();
+    q.add(root);
+    q.add(null);
+
+    while (!q.isEmpty()) 
+    {
+      Node curr = q.poll();
+      if (curr == null) 
+      {
+        if (!q.isEmpty()) 
+        {
+          q.add(null);
+          System.out.println();
+        }
+      } 
+      else 
+      {
+        if (curr.left != null)
+          q.add(curr.left);
+ 
+        if (curr.right != null)
+          q.add(curr.right);
+ 
+        System.out.print(curr.data + " ");
+      }
+    }
+  }
+
+//Reverse Level Order Traversal
+
+  void reverseLevelOrder(Node node) 
+    {
+        Stack<Node> S = new Stack();
+        Queue<Node> Q = new LinkedList();
+        Q.add(node);
+        while (Q.isEmpty() == false) 
+        {
+            node = Q.peek();
+            Q.remove();
+            S.push(node);
+
+            if (node.right != null)
+                Q.add(node.right); 
+                 
+            if (node.left != null)
+                Q.add(node.left);
+        }
+  
+        while (S.empty() == false) 
+        {
+            node = S.peek();
+            System.out.print(node.data + " ");
+            S.pop();
+        }
     }
