@@ -1478,3 +1478,42 @@ static void levelOrder(Node root) {
             S.pop();
         }
     }
+
+//Dont remember which question is this
+
+
+
+ArrayList<Integer> arr = new ArrayList<Integer>();
+arr.add(0);
+void printInorder(Node node,ArrayList<Integer> arr){
+  if(node==null){
+    return;
+  }
+  printInorder(node.left);
+  arr.add(node.key);
+  printInorder(node.right);
+}
+arr.add(0);
+
+
+void myMainFunct(Node node, ArrayList<Integer> arr){
+  if(node==null){
+    return;
+  }
+  
+  myMainFunct(node.left,arr);
+  int j = getIndex(arr,node.key)
+  node.key = arr.get(j-1) + arr.get(j+1);
+  myMainFunct(node.right,arr);  
+}
+
+
+int getIndex(ArrayList<Integer> arr,int x){
+  int i =-1;
+  for(i=0;i<arr.size();i++){
+    if(arr.get(i)==x){
+      return i;
+    }
+  }
+  return i;
+}
