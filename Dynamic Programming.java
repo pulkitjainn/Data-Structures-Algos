@@ -106,29 +106,51 @@ static int editDistance(String a,String b,int m, int n ){
 	    		}
 	    	}
 	    }
-
+		return dis[m][n];
+}
 
 //Minimum Cost Path
 
 static int minCostPath(int[][] a,int m, int n ){
-	    int[][] tc = new int[m+1][n+1];
+	    int[][] tc = new int[m][n];
+        for(int i =0;i<m;i++){
+            for(int j =0;j<n;j++){
+                if(i==0 && j==0){
+                    tc[i][j]=a[0][0];
+                }
+                else if(i==0 && j>0){
+                    tc[i][j]= tc[i][j-1] + a[i][j];
+                }
+                else if(j==0 && i>0){
+                    tc[i][j] = tc[i-1][j] + a[i][j];
+                }
+                else{
+                    tc[i][j]=Math.min(tc[i][j-1],tc[i-1][j]) + a[i][j];
+                }
+            }
+        }
 
-	    for(int i =0;i<=m;i++){
-	    	for(int j =0;j<=n;j++){
-	    	    if(i==0 && j==0){
-	    	        tc[i][j]=a[0][0];
-	    	    }
-	    		else if(i==0 && j>0){
-	    			tc[i][j]= tc[i][j-1] + a[i][j];
-	    		}
-	    		else if(j==0 && i>0){
-	    			tc[i][j] = tc[i-1][j] + a[i][j];
-	    		}
-	    		else{
-	    			tc[i][j]=Math.max(tc[i-1][j-1],Math.max(tc[i][j-1],tc[i-1][j])) + a[i][j];
-	    		}
-	    	}
-	    }
-
-	    return tc[m][n];
+        return tc[m-1][n-1];
+    
 	}
+
+
+//Binomial Coefficient
+
+
+   static int binomialCoff(int n, int k){
+    	int[][] coeff = new int[n+1][k+1];
+
+    	for(int i=0;i<=n;i++){
+    		for(int j=0;j<= Math.min(i,k);j++){
+    			if(j==0 || j==i){
+    				coeff[i][j]=1;
+    			}
+    			else{
+    				coeff[i][j] = (coeff[i-1][j-1] + coeff[i-1][j])%1000000007;
+    			}
+    		}
+    	}
+    	return coeff[n][k];
+    }
+
