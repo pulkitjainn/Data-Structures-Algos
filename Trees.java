@@ -1479,8 +1479,8 @@ static void levelOrder(Node root) {
         }
     }
 
-//Dont remember which question is this
 
+//Dont remember which question is this
 
 
 ArrayList<Integer> arr = new ArrayList<Integer>();
@@ -1517,3 +1517,40 @@ int getIndex(ArrayList<Integer> arr,int x){
   }
   return i;
 }
+
+
+Dated : August 2
+
+
+//Find if there is a pair in root to a leaf path with sum equals to root’s data
+
+public static Boolean check(Node root) 
+    {
+        Queue<Node> queue = new LinkedList<Node>();
+        HashSet<Integer> h = new HashSet<Integer>();
+        //queue.add(root);
+        int sum = root.data;
+        if (root.left != null) {
+                queue.add(root.left);
+            }
+        if (root.right != null) {
+                queue.add(root.right);
+            }
+        while (!queue.isEmpty()) 
+        {
+            Node tempNode = queue.poll();
+            if(h.contains(sum-tempNode.data) || h.contains(sum+tempNode.data)){
+                return true;
+            }else if(!h.contains(tempNode.data)){
+                h.add(tempNode.data);
+            }
+            if (tempNode.left != null) {
+                queue.add(tempNode.left);
+            }
+            if (tempNode.right != null) {
+                queue.add(tempNode.right);
+            }
+        }
+        return false;
+    }
+
