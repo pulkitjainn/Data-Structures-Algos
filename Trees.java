@@ -1,6 +1,8 @@
 //TREES
+
 /* Class containing left and right child of current
    node and key value*/
+
 class Node
 {
     int key;
